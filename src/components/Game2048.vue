@@ -13,10 +13,10 @@
       <div class="grid-cell"></div>
       <div class="grid-cell"></div>
 
-      <div class="grid-cell tile-8">8</div>
+      <div class="grid-cell tile-128">128</div>
       <div class="grid-cell tile-4">4</div>
       <div class="grid-cell"></div>
-      <div class="grid-cell"></div>
+      <div class="grid-cell tile-2048" >2048</div>
 
       <div class="grid-cell tile-32">32</div>
       <div class="grid-cell tile-8">8</div>
@@ -84,7 +84,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 24px;
+  font-size: 1.7rem;
   font-weight: bold;
   color: #776e65;
 }
@@ -96,11 +96,11 @@ body {
 .tile-16 { background-color: #f59563; color: #f9f6f2; }
 .tile-32 { background-color: #f67c5f; color: #f9f6f2; }
 .tile-64 { background-color: #f65e3b; color: #f9f6f2; }
-.tile-128 { background: #edcf72; color: #f9f6f2; font-size: 1.4rem; }
-.tile-256 { background: #edcc61; color: #f9f6f2; font-size: 1.4rem; }
-.tile-512 { background: #edc850; color: #f9f6f2; font-size: 1.4rem; }
-.tile-1024 { background: #edc53f; color: #f9f6f2; font-size: 1.2rem; }
-.tile-2048 { background: #edc22e; color: #f9f6f2; font-size: 1.2rem; }
+.tile-128 { background: #edcf72; color: #f9f6f2; font-size: 1.5rem; }
+.tile-256 { background: #edcc61; color: #f9f6f2; font-size: 1.5rem; }
+.tile-512 { background: #edc850; color: #f9f6f2; font-size: 1.5rem; }
+.tile-1024 { background: #edc53f; color: #f9f6f2; font-size: 1.4rem; }
+.tile-2048 { background: #edc22e; color: #f9f6f2; font-size: 1.4rem; }
 
 /* Add more tile colors as needed */
 
