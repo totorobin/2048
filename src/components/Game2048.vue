@@ -1,3 +1,25 @@
+<script setup lang="ts">
+import {useGame} from "../utils/game";
+import {computed, watch} from "vue";
+import { useMagicKeys } from "@vueuse/core";
+
+
+const gameStore = useGame()
+
+gameStore.newGame()
+
+const gridAsList = computed(() => gameStore.theGame.value.grille.flat())
+
+const { current } = useMagicKeys()
+
+watch( current, () => {
+  if( current.has('arrowup') ) gameStore.move('up')
+  if( current.has('arrowdown') ) gameStore.move('down')
+  if( current.has( 'arrowleft') ) gameStore.move('left')
+  if( current.has( 'arrowright') ) gameStore.move('right')
+})
+</script>
+
 <template>
   <div class="container">
     <h1>2048</h1>
@@ -8,25 +30,7 @@
     </div>
 
     <div class="grid-container">
-      <div class="grid-cell tile-4">4</div>
-      <div class="grid-cell tile-2">2</div>
-      <div class="grid-cell"></div>
-      <div class="grid-cell"></div>
-
-      <div class="grid-cell tile-128">128</div>
-      <div class="grid-cell tile-4">4</div>
-      <div class="grid-cell"></div>
-      <div class="grid-cell tile-2048" >2048</div>
-
-      <div class="grid-cell tile-32">32</div>
-      <div class="grid-cell tile-8">8</div>
-      <div class="grid-cell tile-4">4</div>
-      <div class="grid-cell tile-2">2</div>
-
-      <div class="grid-cell tile-64">64</div>
-      <div class="grid-cell tile-16">16</div>
-      <div class="grid-cell tile-8">8</div>
-      <div class="grid-cell tile-4">4</div>
+      <div class="grid-cell" v-for="cell in gridAsList" :class="`tile-${cell}`">{{ cell == 0 ? '' : cell}}</div>
     </div>
   </div>
 </template>
