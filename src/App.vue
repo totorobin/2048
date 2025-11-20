@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import PWABadge from './components/PWABadge.vue'
 import Game2048 from "./components/Game2048.vue";
+
+const build_id = import.meta.env.VITE_APP_BUILD || ''
 </script>
 
 <template>
   <Game2048 />
   <PWABadge />
+  {{ build_id}}
 </template>
 
 <style scoped>
