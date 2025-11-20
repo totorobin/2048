@@ -60,7 +60,15 @@ jobs:
         run: pnpm install
 
       - name: Build env variable
-        run: echo ${{ vars }}
+        run: |
+          echo "repository variable : $REPOSITORY_VAR"
+          echo "organization variable : $ORGANIZATION_VAR"
+          echo "overridden variable : $OVERRIDE_VAR"
+          echo "variable from shell environment : $env_var"
+        env:
+          REPOSITORY_VAR: ${{ vars.REPOSITORY_VAR }}
+          ORGANIZATION_VAR: ${{ vars.ORGANIZATION_VAR }}
+          OVERRIDE_VAR: ${{ vars.OVERRIDE_VAR }}
       # run: echo -e "VITE_APP_BUILD=${CI_PIPELINE_ID}\n" > .env.local
 
       - name: Build 🔧
