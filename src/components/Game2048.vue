@@ -21,8 +21,9 @@ watch( current, () => {
 
 const game = useTemplateRef('game')
 useSwipe(game, {
-  onSwipeEnd: (e, direction) => {
-    gameStore.move(direction)
+  onSwipeEnd: (_e, direction) => {
+    if(direction !== 'none')
+     gameStore.move(direction)
   }
 })
 
