@@ -20,7 +20,7 @@ watch( current, () => {
 })
 
 const game = useTemplateRef('game')
-useSwipe(game, {
+const { direction } = useSwipe(game, {
   onSwipeEnd: (_e, direction) => {
     if(direction !== 'none')
      gameStore.move(direction)
@@ -32,7 +32,7 @@ useSwipe(game, {
 <template>
   <div class="container" ref="game">
     <h1>2048</h1>
-
+    {{ direction }}
     <div class="score-container">
       <div class="score-box"><div class="label">SCORE</div><div class="value">532</div></div>
       <div class="score-box"><div class="label">BEST</div><div class="value">69.6k</div></div>
