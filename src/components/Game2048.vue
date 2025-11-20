@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useGame} from "../utils/game";
-import {computed, watch} from "vue";
-import { useMagicKeys } from "@vueuse/core";
+import {computed, useTemplateRef, watch} from "vue";
+import {useMagicKeys, useSwipe} from "@vueuse/core";
 
 
 const gameStore = useGame()
@@ -18,10 +18,18 @@ watch( current, () => {
   if( current.has( 'arrowleft') ) gameStore.move('left')
   if( current.has( 'arrowright') ) gameStore.move('right')
 })
+
+const game = useTemplateRef('game')
+useSwipe(game, {
+  onSwipeEnd: (e, direction) => {
+    gameStore.move(direction)
+  }
+})
+
 </script>
 
 <template>
-  <div class="container">
+  <div class="container" ref="game">
     <h1>2048</h1>
 
     <div class="score-container">
