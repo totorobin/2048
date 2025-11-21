@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import {useGame} from "../utils/game";
 import {computed, useTemplateRef, watch} from "vue";
-import {useMagicKeys, useSwipe} from "@vueuse/core";
+import {useMagicKeys, useSwipe, useStorage} from "@vueuse/core";
 
 
+// bind number
+const score = useStorage('my-score', 0)
 const gameStore = useGame()
 
 gameStore.newGame()
@@ -37,6 +39,9 @@ const { direction } = useSwipe(game, {
   }
 })
 
+watch(() => gameStore.points.value, (newVal) => {
+  if(newVal > score.value) score.value = newVal
+})
 </script>
 
 <template>
@@ -44,7 +49,7 @@ const { direction } = useSwipe(game, {
     <h1>2048</h1>
     <div class="score-container">
       <div class="score-box"><div class="label">SCORE</div><div class="value">{{ gameStore.points }}</div></div>
-      <div class="score-box"><div class="label">BEST</div><div class="value">69.6k</div></div>
+      <div class="score-box"><div class="label">BEST</div><div class="value">{{ score }}</div></div>
     </div>
 
     <div class="grid-container">
