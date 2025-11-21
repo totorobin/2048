@@ -21,8 +21,17 @@ watch( current, () => {
 
 const game = useTemplateRef('game')
 const { direction } = useSwipe(game, {
+  onSwipeStart: (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+  },
+  onSwipe: (e) => {
+      e.preventDefault()
+    e.stopPropagation()
+  },
   onSwipeEnd: (e, direction) => {
     e.preventDefault()
+    e.stopPropagation()
     if(direction !== 'none')
      gameStore.move(direction)
   }
