@@ -1,4 +1,4 @@
-import {ref} from "vue";
+import {computed, ref} from "vue";
 
 interface Game {
     grille: number[][]
@@ -107,9 +107,12 @@ export const useGame = () => {
         }
     }
 
+    const points = computed(() => theGame.value?.grille.flat().reduce((p, n) => p + n, 0))
+
     return {
         theGame,
         newGame,
-        move
+        move,
+        points
     }
 }

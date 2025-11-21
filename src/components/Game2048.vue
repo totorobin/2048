@@ -43,7 +43,7 @@ const { direction } = useSwipe(game, {
   <div class="container" ref="game">
     <h1>2048</h1>
     <div class="score-container">
-      <div class="score-box"><div class="label">SCORE</div><div class="value">532</div></div>
+      <div class="score-box"><div class="label">SCORE</div><div class="value">{{ gameStore.points }}</div></div>
       <div class="score-box"><div class="label">BEST</div><div class="value">69.6k</div></div>
     </div>
 
