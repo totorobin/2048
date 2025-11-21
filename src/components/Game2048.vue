@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useGame} from "../utils/game";
 import {computed, useTemplateRef, watch} from "vue";
-import {useMagicKeys, useSwipe, useStorage} from "@vueuse/core";
+import {useMagicKeys, useSwipe, useStorage, useScroll} from "@vueuse/core";
 
 
 // bind number
@@ -37,16 +37,21 @@ const { direction } = useSwipe(game, {
     e.stopPropagation()
     if(direction !== 'none')
      gameStore.move(direction)
+    x.value= 100
+    y.value= 100
   }
 })
-
+const { x, y } = useScroll(el)
+x.value= 100
+y.value= 100
 watch(() => gameStore.points.value, (newVal) => {
   if(newVal > score.value) score.value = newVal
-})
+}
+
 </script>
 
 <template>
-  <div class="container" ref="game">
+  <div class="container">
     <h1>2048</h1>
     <div class="score-container">
       <div class="score-box"><div class="label">SCORE</div><div class="value">{{ gameStore.points }}</div></div>
@@ -58,10 +63,26 @@ watch(() => gameStore.points.value, (newVal) => {
     </div>
     {{ direction }}
   </div>
+  <div class="overflow-wrapper">
+    <div class="overflow" ref="game"></div>
+  </div>
 </template>
 
 <style>
-
+.overflow-wrapper {
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.overflow {
+  z-index: 1;
+  width: 200vh;
+  height: 200vh;
+  background-color: rgba(0, 0, 0, 0);
+}
 body {
   font-family: Arial, sans-serif;
   text-align: center;
