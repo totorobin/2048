@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useGame} from "../utils/game";
 import {computed, onMounted, useTemplateRef, watch} from "vue";
-import {useMagicKeys, useSwipe, useStorage, useScroll} from "@vueuse/core";
+import {useMagicKeys, useSwipe, useStorage} from "@vueuse/core";
 
 
 // bind number
