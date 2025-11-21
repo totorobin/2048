@@ -23,6 +23,7 @@ watch( current, () => {
 
 const game = useTemplateRef('game')
 const { direction } = useSwipe(game, {
+  passive: true,
   onSwipeStart: (e) => {
     e.preventDefault()
     e.stopPropagation()
