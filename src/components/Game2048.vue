@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import {useGame} from "../utils/game";
-import {computed, onMounted, useTemplateRef, watch, ref} from "vue";
-import {useStorage, useScroll} from "@vueuse/core";
-
+import {computed, onMounted, useTemplateRef, watch} from "vue";
+import {useMagicKeys, useSwipe, useStorage, useScroll} from "@vueuse/core";
 
 // bind number
 const score = useStorage('my-score', 0)
@@ -11,25 +10,41 @@ const gameStore = useGame()
 gameStore.newGame()
 
 const gridAsList = computed(() => gameStore.theGame.value.grille.flat())
+
+const { current } = useMagicKeys()
+
+watch( current, () => {
+  if( current.has('arrowup') ) gameStore.move('up')
+  if( current.has('arrowdown') ) gameStore.move('down')
+  if( current.has( 'arrowleft') ) gameStore.move('left')
+  if( current.has( 'arrowright') ) gameStore.move('right')
+
+  w.value?.scrollTo({ top: 100, left: 100 })
+})
+
+const game = useTemplateRef('game')
 const w = useTemplateRef('game-w')
-const direction = ref<"up" | "down" | "left" | "right"|null>(null)
-const move = ref(false)
-const { directions } = useScroll(w, {
-  onScroll() {
-    if(move.value){
-      if( directions.top ) direction.value = 'up'
-      if( directions.bottom ) direction.value ='down'
-      if( directions.left ) direction.value ='left'
-      if( directions.right ) direction.value ='right'
-      if(direction.value != null)
-        gameStore.move(direction.value)
-      move.value = false
-    }
-  },
+useScroll(w, {
   onStop() {
-    direction.value = null
     w.value?.scrollTo({ top: 100, left: 100 })
-    setTimeout(() => move.value = true, 100)
+  }
+})
+const { direction } = useSwipe(game, {
+  passive: true,
+  onSwipeStart: (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+  },
+  onSwipe: (e) => {
+      e.preventDefault()
+    e.stopPropagation()
+  },
+  onSwipeEnd: (e, direction) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if(direction !== 'none') {
+      gameStore.move(direction)
+    }
   }
 })
 watch(() => gameStore.points.value, (newVal) => {
@@ -37,7 +52,6 @@ watch(() => gameStore.points.value, (newVal) => {
 })
 onMounted(() => {
   w.value?.scrollTo({ top: 100, left: 100 })
-  setTimeout(() => move.value = true, 100)
 })
 </script>
 
