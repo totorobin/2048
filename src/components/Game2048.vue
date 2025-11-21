@@ -20,6 +20,7 @@ watch( current, () => {
   if( current.has( 'arrowleft') ) gameStore.move('left')
   if( current.has( 'arrowright') ) gameStore.move('right')
 
+  w.value?.scrollTo({ top: 100, left: 100 })
 })
 
 const game = useTemplateRef('game')
@@ -46,7 +47,7 @@ watch(() => gameStore.points.value, (newVal) => {
   if(newVal > score.value) score.value = newVal
 })
 onMounted(() => {
-  w.value?.scrollTo({ top: 100 })
+  w.value?.scrollTo({ top: 100, left: 100 })
 })
 </script>
 
@@ -66,9 +67,12 @@ onMounted(() => {
   <div class="overflow-wrapper" ref="game-w">
     <div class="overflow" ref="game">
       <div class="top"></div>
+      <div class="body">
+        <div class="left"></div>
+        <div class="inner-body"></div>
+        <div class="right"></div>
+      </div>
       <div class="bottom"></div>
-      <div class="right"></div>
-      <div class="left"></div>
 
     </div>
   </div>
@@ -81,13 +85,47 @@ onMounted(() => {
   left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 .overflow {
   z-index: 1;
-  width: calc(100vw + 200px);
-  height: calc(100vh + 200px);
+  overflow-y: scroll;
+  overflow-x: scroll;
+  min-width: calc(100vw + 200px);
+  min-height: calc(100vh + 200px);
   background-color: rgba(0, 0, 0, 0.1);
+  .top {
+    height: 100px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .bottom {
+    height: 100px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .body {
+    display: flex;
+  }
+  .left {
+    height: 100vh;
+    width: 100px;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .right {
+    height: 100vh;
+    width: 100px;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .inner-body {
+    height: 100vh;
+    width: 100vw;
+  }
 }
 body {
   font-family: Arial, sans-serif;
