@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {useGame} from "../utils/game";
-import {computed, useTemplateRef, watch} from "vue";
+import {computed, onMounted, useTemplateRef, watch} from "vue";
 import {useMagicKeys, useSwipe, useStorage, useScroll} from "@vueuse/core";
 
 
@@ -19,9 +19,11 @@ watch( current, () => {
   if( current.has('arrowdown') ) gameStore.move('down')
   if( current.has( 'arrowleft') ) gameStore.move('left')
   if( current.has( 'arrowright') ) gameStore.move('right')
+
 })
 
 const game = useTemplateRef('game')
+const w = useTemplateRef('game-w')
 const { direction } = useSwipe(game, {
   passive: true,
   onSwipeStart: (e) => {
@@ -37,17 +39,15 @@ const { direction } = useSwipe(game, {
     e.stopPropagation()
     if(direction !== 'none')
      gameStore.move(direction)
-    x.value= 100
-    y.value= 100
+    w.value.scrollTo({ top: 20 })
   }
 })
-const { x, y } = useScroll(game)
-x.value= 100
-y.value= 100
 watch(() => gameStore.points.value, (newVal) => {
   if(newVal > score.value) score.value = newVal
 })
-
+onMounted(() => {
+  w.value.scrollTo({ top: 20 })
+})
 </script>
 
 <template>
@@ -63,8 +63,14 @@ watch(() => gameStore.points.value, (newVal) => {
     </div>
     {{ direction }}
   </div>
-  <div class="overflow-wrapper">
-    <div class="overflow" ref="game"></div>
+  <div class="overflow-wrapper" ref="game-w">
+    <div class="overflow" ref="game">
+      <div class="top"></div>
+      <div class="bottom"></div>
+      <div class="right"></div>
+      <div class="left"></div>
+
+    </div>
   </div>
 </template>
 
@@ -79,9 +85,9 @@ watch(() => gameStore.points.value, (newVal) => {
 }
 .overflow {
   z-index: 1;
-  width: 200vh;
-  height: 200vh;
-  background-color: rgba(0, 0, 0, 0);
+  width: calc(100vw + 40px);
+  height: calc(100vh + 40px);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 body {
   font-family: Arial, sans-serif;
