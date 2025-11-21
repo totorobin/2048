@@ -11,26 +11,25 @@ const gameStore = useGame()
 gameStore.newGame()
 
 const gridAsList = computed(() => gameStore.theGame.value.grille.flat())
-const game = useTemplateRef('game')
 const w = useTemplateRef('game-w')
-const direction = ref('')
+const direction = ref<"up" | "down" | "left" | "right"|null>(null)
 const move = ref(false)
-const { arrivedState , directions } = useScroll(w, {
-  onScroll(e: Event) {
+const { directions } = useScroll(w, {
+  onScroll() {
     if(move.value){
-      console.log(e, arrivedState, directions)
       if( directions.top ) direction.value = 'up'
       if( directions.bottom ) direction.value ='down'
       if( directions.left ) direction.value ='left'
       if( directions.right ) direction.value ='right'
-      gameStore.move(direction.value)
+      if(direction.value != null)
+        gameStore.move(direction.value)
       move.value = false
     }
   },
-  onStop(e: MouseEvent) {
+  onStop() {
+    direction.value = null
     w.value?.scrollTo({ top: 100, left: 100 })
     setTimeout(() => move.value = true, 100)
-
   }
 })
 watch(() => gameStore.points.value, (newVal) => {
