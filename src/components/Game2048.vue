@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useGame} from "../utils/game";
 import {computed, onMounted, useTemplateRef, watch, ref, nextTick} from "vue";
-import {useMagicKeys, useSwipe, useStorage, useScroll} from "@vueuse/core";
+import {useStorage, useScroll} from "@vueuse/core";
 
 
 // bind number
@@ -11,18 +11,6 @@ const gameStore = useGame()
 gameStore.newGame()
 
 const gridAsList = computed(() => gameStore.theGame.value.grille.flat())
-/*
-const { current } = useMagicKeys()
-
-watch( current, () => {
-  if( current.has('arrowup') ) gameStore.move('up')
-  if( current.has('arrowdown') ) gameStore.move('down')
-  if( current.has( 'arrowleft') ) gameStore.move('left')
-  if( current.has( 'arrowright') ) gameStore.move('right')
-
-  w.value?.scrollTo({ top: 100, left: 100 })
-})*/
-
 const game = useTemplateRef('game')
 const w = useTemplateRef('game-w')
 const direction = ref('')
@@ -45,26 +33,6 @@ const { arrivedState , directions } = useScroll(w, {
 
   }
 })
-/*
-const { direction } = useSwipe(game, {
-  passive: true,
-  onSwipeStart: (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-  },
-  onSwipe: (e) => {
-      e.preventDefault()
-    e.stopPropagation()
-  },
-  onSwipeEnd: (e, direction) => {
-    e.preventDefault()
-    e.stopPropagation()
-    if(direction !== 'none') {
-      gameStore.move(direction)
-    }
-    w.value?.scrollTo({ top: 100, left: 100  })
-  }
-})*/
 watch(() => gameStore.points.value, (newVal) => {
   if(newVal > score.value) score.value = newVal
 })
