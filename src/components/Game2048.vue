@@ -33,7 +33,6 @@ const { direction } = useSwipe(game, {
 <template>
   <div class="container" ref="game">
     <h1>2048</h1>
-    {{ direction }}
     <div class="score-container">
       <div class="score-box"><div class="label">SCORE</div><div class="value">532</div></div>
       <div class="score-box"><div class="label">BEST</div><div class="value">69.6k</div></div>
@@ -42,6 +41,7 @@ const { direction } = useSwipe(game, {
     <div class="grid-container">
       <div class="grid-cell" v-for="cell in gridAsList" :class="`tile-${cell}`">{{ cell == 0 ? '' : cell}}</div>
     </div>
+    {{ direction }}
   </div>
 </template>
 
@@ -53,7 +53,7 @@ body {
 }
 
 .container {
-  width: 320px;
+  width: 270px;
   margin: 0 auto;
 }
 
@@ -85,15 +85,15 @@ body {
   border-radius: 6px;
   grid-template-rows: repeat(4, 1fr);
   gap: 10px;
-  width: 320px;
-  height: 320px;
+  width: 270px;
+  height: 270px;
   box-shadow: inset 0 0 0 4px rgba(0,0,0,0.05);
 }
 
 .grid-cell {
   background-color: #cdc1b4;
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   border-radius: 5px;
   display: flex;
   justify-content: center;

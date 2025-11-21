@@ -6,22 +6,23 @@ const build_id = import.meta.env.VITE_APP_BUILD || ''
 </script>
 
 <template>
-  <Game2048 />
-  <PWABadge />
-  {{ build_id}}
+  <main class="main">
+    <Game2048 />
+    <PWABadge />
+  </main>
+  <footer class="footer">
+   build&nbsp;:&nbsp;{{build_id}}
+  </footer>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+main {
+  max-height: calc(100vh - 30px);
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+footer {
+  position: absolute;
+  width: 50px;
+  margin: 0 auto;
+  bottom: 0;
 }
 </style>

@@ -60,7 +60,7 @@ jobs:
         run: pnpm install
 
       - name: Build env variable
-        run: echo -e "VITE_APP_BUILD=$(date +%s)\n" > .env.local
+        run: echo -e "VITE_APP_BUILD=$(date)\n" > .env.local
 
       - name: Build 🔧
         run: pnpm run build
