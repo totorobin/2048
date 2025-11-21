@@ -41,12 +41,12 @@ const { direction } = useSwipe(game, {
     y.value= 100
   }
 })
-const { x, y } = useScroll(el)
+const { x, y } = useScroll(game)
 x.value= 100
 y.value= 100
 watch(() => gameStore.points.value, (newVal) => {
   if(newVal > score.value) score.value = newVal
-}
+})
 
 </script>
 
