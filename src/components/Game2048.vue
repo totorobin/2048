@@ -39,14 +39,14 @@ const { direction } = useSwipe(game, {
     e.stopPropagation()
     if(direction !== 'none')
      gameStore.move(direction)
-    w.value.scrollTo({ top: 20 })
+    w.value?.scrollTo({ top: 100 })
   }
 })
 watch(() => gameStore.points.value, (newVal) => {
   if(newVal > score.value) score.value = newVal
 })
 onMounted(() => {
-  w.value.scrollTo({ top: 20 })
+  w.value?.scrollTo({ top: 100 })
 })
 </script>
 
@@ -85,8 +85,8 @@ onMounted(() => {
 }
 .overflow {
   z-index: 1;
-  width: calc(100vw + 40px);
-  height: calc(100vh + 40px);
+  width: calc(100vw + 200px);
+  height: calc(100vh + 200px);
   background-color: rgba(0, 0, 0, 0.1);
 }
 body {
