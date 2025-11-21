@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import PWABadge from './components/PWABadge.vue'
 import Game2048 from "./components/Game2048.vue";
 
 const build_id = import.meta.env.VITE_APP_BUILD || ''
@@ -7,7 +6,6 @@ const build_id = import.meta.env.VITE_APP_BUILD || ''
 
 <template>
   <main class="main">
-    <PWABadge />
     <Game2048 />
   </main>
   <footer class="footer">

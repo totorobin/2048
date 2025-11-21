@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useGame} from "../utils/game";
-import {computed, onMounted, useTemplateRef, watch} from "vue";
-import {useMagicKeys, useSwipe, useStorage} from "@vueuse/core";
+import {computed, onMounted, useTemplateRef, watch, ref, nextTick} from "vue";
+import {useMagicKeys, useSwipe, useStorage, useScroll} from "@vueuse/core";
 
 
 // bind number
@@ -11,7 +11,7 @@ const gameStore = useGame()
 gameStore.newGame()
 
 const gridAsList = computed(() => gameStore.theGame.value.grille.flat())
-
+/*
 const { current } = useMagicKeys()
 
 watch( current, () => {
@@ -21,10 +21,31 @@ watch( current, () => {
   if( current.has( 'arrowright') ) gameStore.move('right')
 
   w.value?.scrollTo({ top: 100, left: 100 })
-})
+})*/
 
 const game = useTemplateRef('game')
 const w = useTemplateRef('game-w')
+const direction = ref('')
+const move = ref(false)
+const { arrivedState , directions } = useScroll(w, {
+  onScroll(e: Event) {
+    if(move.value){
+      console.log(e, arrivedState, directions)
+      if( directions.top ) direction.value = 'up'
+      if( directions.bottom ) direction.value ='down'
+      if( directions.left ) direction.value ='left'
+      if( directions.right ) direction.value ='right'
+      gameStore.move(direction.value)
+      move.value = false
+    }
+  },
+  onStop(e: MouseEvent) {
+    w.value?.scrollTo({ top: 100, left: 100 })
+    setTimeout(() => move.value = true, 100)
+
+  }
+})
+/*
 const { direction } = useSwipe(game, {
   passive: true,
   onSwipeStart: (e) => {
@@ -38,16 +59,18 @@ const { direction } = useSwipe(game, {
   onSwipeEnd: (e, direction) => {
     e.preventDefault()
     e.stopPropagation()
-    if(direction !== 'none')
-     gameStore.move(direction)
-    w.value?.scrollTo({ top: 100 })
+    if(direction !== 'none') {
+      gameStore.move(direction)
+    }
+    w.value?.scrollTo({ top: 100, left: 100  })
   }
-})
+})*/
 watch(() => gameStore.points.value, (newVal) => {
   if(newVal > score.value) score.value = newVal
 })
 onMounted(() => {
   w.value?.scrollTo({ top: 100, left: 100 })
+  setTimeout(() => move.value = true, 100)
 })
 </script>
 
