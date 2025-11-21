@@ -11,7 +11,7 @@ const build_id = import.meta.env.VITE_APP_BUILD || ''
     <Game2048 />
   </main>
   <footer class="footer">
-   build&nbsp;:&nbsp;{{build_id}}
+   <p>build : {{build_id}}</p>
   </footer>
 </template>
 
@@ -21,8 +21,8 @@ main {
 }
 footer {
   position: absolute;
-  width: 50px;
-  margin: 0 auto;
+  min-width: 150px;
   bottom: 0;
 }
+
 </style>
