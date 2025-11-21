@@ -7,8 +7,8 @@ const build_id = import.meta.env.VITE_APP_BUILD || ''
 
 <template>
   <main class="main">
-    <Game2048 />
     <PWABadge />
+    <Game2048 />
   </main>
   <footer class="footer">
    build&nbsp;:&nbsp;{{build_id}}

@@ -48,11 +48,11 @@ const { needRefresh, updateServiceWorker } = useRegisterSW({
       })
     }
   },
+  onOfflineReady() {},
 })
 
 const title = computed(() => {
-  
-    
+
   if (needRefresh.value)
     return 'New content available, click on reload button to update.'
   return ''
