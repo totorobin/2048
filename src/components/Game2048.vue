@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {useGame} from "../utils/game";
-import {computed, onMounted, useTemplateRef, watch, ref, nextTick} from "vue";
+import {computed, onMounted, useTemplateRef, watch, ref} from "vue";
 import {useStorage, useScroll} from "@vueuse/core";
 
 
