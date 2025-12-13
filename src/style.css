@@ -11,6 +11,7 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overscroll-behavior-y: contain;
 }
 
 a {
@@ -53,9 +54,10 @@ button:focus-visible {
     padding: 2em;
 }
 
+html,
 body {
     margin: 0;
-    overscroll-behavior: contain;
+    overscroll-behavior-y: contain;
 }
 
 #app {
