@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useGame} from "../utils/game";
-import {computed, onMounted, useTemplateRef, watch} from "vue";
-import {useMagicKeys, useSwipe, useStorage, useScroll} from "@vueuse/core";
+import {computed, useTemplateRef, watch} from "vue";
+import {useMagicKeys, useSwipe, useStorage } from "@vueuse/core";
 
 // bind number
 const score = useStorage('my-score', 0)
@@ -19,29 +19,13 @@ watch( current, () => {
   if( current.has( 'arrowleft') ) gameStore.move('left')
   if( current.has( 'arrowright') ) gameStore.move('right')
 
-  w.value?.scrollTo({ top: 100, left: 100 })
 })
 
 const game = useTemplateRef('game')
-const w = useTemplateRef('game-w')
-useScroll(w, {
-  onStop() {
-    w.value?.scrollTo({ top: 100, left: 100 })
-  }
-})
+
 const { direction } = useSwipe(game, {
   passive: true,
-  onSwipeStart: (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-  },
-  onSwipe: (e) => {
-      e.preventDefault()
-    e.stopPropagation()
-  },
   onSwipeEnd: (e, direction) => {
-    e.preventDefault()
-    e.stopPropagation()
     if(direction !== 'none') {
       gameStore.move(direction)
     }
@@ -50,13 +34,10 @@ const { direction } = useSwipe(game, {
 watch(() => gameStore.points.value, (newVal) => {
   if(newVal > score.value) score.value = newVal
 })
-onMounted(() => {
-  w.value?.scrollTo({ top: 100, left: 100 })
-})
 </script>
 
 <template>
-  <div class="container">
+  <div class="container" ref="game">
     <h1>2048</h1>
     <div class="score-container">
       <div class="score-box"><div class="label">SCORE</div><div class="value">{{ gameStore.points }}</div></div>
@@ -67,18 +48,6 @@ onMounted(() => {
       <div class="grid-cell" v-for="cell in gridAsList" :class="`tile-${cell}`">{{ cell == 0 ? '' : cell}}</div>
     </div>
     {{ direction }}
-  </div>
-  <div class="overflow-wrapper" ref="game-w">
-    <div class="overflow" ref="game">
-      <div class="top"></div>
-      <div class="body">
-        <div class="left"></div>
-        <div class="inner-body"></div>
-        <div class="right"></div>
-      </div>
-      <div class="bottom"></div>
-
-    </div>
   </div>
 </template>
 
